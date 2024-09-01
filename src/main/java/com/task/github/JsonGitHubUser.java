@@ -13,6 +13,8 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 
@@ -20,34 +22,31 @@ public class JsonGitHubUser {
     static Dotenv dotenv = Dotenv.load();
 
     private final Issues insurre = new Issues();
-    private static String url = "https://api.github.com/users/joaolucassilva/events";
 
-    public void User() throws IOException {
-        JsonAPi();
-        push();
-        insurre.issueId();
-        insurre.star();
-        insurre.pullRequest();
-
+    public void User(Scanner input) throws IOException {
+        String name = input.nextLine();
+        JSONArray events = JsonAPi(name);
+        push(events);
+        insurre.issueId(events);
+        insurre.star(name);
+        insurre.pullRequest(events);
     }
 
 
-    public static JSONArray JsonAPi() throws IOException {
+    public static JSONArray JsonAPi(String input) throws IOException {
+        String url = "https://api.github.com/users/" + input + "/events";
         HttpURLConnection httpConnection = (HttpURLConnection) new URL(url).openConnection();
         httpConnection.setRequestMethod("GET");
-
         httpConnection.setRequestProperty("Accept", "application/json");
-        httpConnection.setRequestProperty("Authorization","Bearer"+  dotenv.get("TOKEN_GITHUB"));
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
-        JSONArray jsonArray = new JSONArray(in.readLine());
+        httpConnection.setRequestProperty("Authorization", "Bearer" + dotenv.get("TOKEN_GITHUB"));
 
-        in.close();
-        return jsonArray;
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()))) {
+            return new JSONArray(in.readLine());
+        }
     }
 
 
-    public void push() throws IOException {
-        JSONArray jsonArray = JsonAPi();
+    public void push(JSONArray jsonArray) {
         Map<String, Integer> repoCommits = new HashMap<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject json = jsonArray.getJSONObject(i);
