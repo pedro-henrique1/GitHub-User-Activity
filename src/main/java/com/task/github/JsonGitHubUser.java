@@ -24,12 +24,11 @@ public class JsonGitHubUser {
 
     public void JsonAPi() throws IOException {
 //        URL gitHub = new URL("https://api.github.com/users/" + user + "/events");
-        URL gitHub = new URL("https://api.github.com/users/pedro-henrique1/events");
+        URL gitHub = new URL("https://api.github.com/users/joaolucassilva/events");
         URLConnection yc = gitHub.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
         JSONArray jsonArray = new JSONArray(in.readLine());
-        Map<String, Integer> repoCommits = new HashMap<>(); // Armazenar o total de commits por repositório
-
+        Map<String, Integer> repoCommits = new HashMap<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject json = jsonArray.getJSONObject(i);
@@ -45,9 +44,14 @@ public class JsonGitHubUser {
             }
 
         }
-        repoCommits.forEach((repo, commits) -> {
-            System.out.println("Pushed " + commits + " commits to " + repo);
-        });
+        Map.Entry<String, Integer> lastEntry = null;
+        for (Map.Entry<String, Integer> entry : repoCommits.entrySet()) {
+            lastEntry = entry;
+        }
+        assert lastEntry != null;
+        System.out.println("Pushed " + lastEntry.getValue() + " to " + lastEntry.getKey());
+
+
     }
 
 }
