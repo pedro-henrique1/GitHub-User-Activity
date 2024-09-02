@@ -7,15 +7,15 @@ organizada das atividades diretamente em sua linha de comando, sem a necessidade
 
 ## Funcionalidades
 
-- **Commits Recentes:** Pegar todos os commits feitos no repositorio mais recente.
-- **Issues:** Retorna a issues mais recente aberta ou fechada do seu github.
-- **Estrela:** Retorna o repositorio mais recente que o usuario adicionou aos favoritos.
-- **Pull Request:** Retorna o status e o repositorio da pull request mais recente aberta.
+- **Commits Recentes:** Obtém todos os commits feitos no repositório mais recente.
+- **Issues:** Retorna a issue mais recente aberta ou fechada do GitHub do usuário.
+- **Estrela:** Retorna o repositório mais recente que o usuário adicionou aos favoritos.
+- **Pull Request:** Retorna o status e o repositório da pull request mais recente aberta.
 
 # Requisitos
 
 - É necessario ter o  [java](https://www.java.com/download/ie_manual.jsp) instalado em sua maquina para rodar o
-  programa e tambem o [maven](https://maven.apache.org/install.html).
+  programa e tambem o [maven](https://maven.apache.org/install.html) para gerenciar as dependências e compilar o projeto.
 
 # Instalação
 
@@ -26,16 +26,17 @@ organizada das atividades diretamente em sua linha de comando, sem a necessidade
   cd GitHub-User-Activity
 ```
 
-- Clone o .env e adicione sua chave do github
-
 - Gere o token [aqui](https://github.com/settings/tokens)
+
+- Clone o arquivo `.env.example` e adicione sua chave do GitHub:
 
 ```
   cd src/main/resources
-  
   cp .env.example .env
 
 ```
+- Edite o arquivo `.env` para incluir seu token de acesso pessoal.
+
 
 - Instalar Dependência:
 
@@ -49,16 +50,21 @@ organizada das atividades diretamente em sua linha de comando, sem a necessidade
   mvn exec:java -Dexec.mainClass="com.task.Main"
 ```
 # Uso
-Execute o programa e coloque o username do github
+Execute o programa e forneça o nome de usuário do GitHub que você deseja consultar:
+```
+ github-activity `username`
+```
+
+# Exemplo de Uso
 
 ```
- github-activity kamranahmedse
+  github-activity kamranahmedse
 ```
-
 
 # Exemplo
+- Saída esperada:
 
-```
+```plaintext
 # Commit mais recente
 Pushed 30 commits to kamranahmedse/developer-roadmap
 
