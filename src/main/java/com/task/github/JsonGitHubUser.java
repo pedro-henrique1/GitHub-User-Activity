@@ -33,6 +33,11 @@ public class JsonGitHubUser {
 
 
     public static JSONArray JsonAPi(String input) throws IOException {
+
+        if (dotenv.get("TOKEN_GITHUB").isEmpty()){
+            System.err.println("adicione o token gerado pelo github");
+        }
+        try {
         String url = "https://api.github.com/users/" + input + "/events";
         HttpURLConnection httpConnection = (HttpURLConnection) new URL(url).openConnection();
         httpConnection.setRequestMethod("GET");
@@ -48,8 +53,10 @@ public class JsonGitHubUser {
             System.out.println("No events found");
         }
         return jsonArray;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao obter eventos do github");
+        }
     }
-
 
     public void push(JSONArray jsonArray) {
         Map<String, Integer> repoCommits = new HashMap<>();
