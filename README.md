@@ -26,6 +26,17 @@ organizada das atividades diretamente em sua linha de comando, sem a necessidade
   cd GitHub-User-Activity
 ```
 
+- Clone o .env e adicione sua chave do github
+
+- Gere o token [aqui](https://github.com/settings/tokens)
+
+```
+  cd src/main/resources
+  
+  cp .env.example .env
+
+```
+
 - Instalar Dependência:
 
 ```
@@ -47,7 +58,7 @@ Execute o programa e coloque o username do github
 
 # Exemplo
 
-```shell
+```
 # Commit mais recente
 Pushed 30 commits to kamranahmedse/developer-roadmap
 
