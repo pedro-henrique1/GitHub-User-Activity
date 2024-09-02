@@ -11,15 +11,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         JsonGitHubUser jsonGitHubUser = new JsonGitHubUser();
-//        System.out.print(PREFIX + " ");  // Exibe o prefixo no prompt
-//        String input = scanner.nextLine();
-//        String[] inputArgs = (PREFIX + " " + input).split(" ");
-//
-//        if (input.equalsIgnoreCase("exit")) {
-//            System.out.println(PREFIX + " Saindo... Até logo!");
-//        }
-        jsonGitHubUser.User();
 
+        while (true) {
+            System.out.print(PREFIX + " ");
+            String input = scanner.nextLine();
+            String[] inputArgs = (PREFIX + " " + input).split(" ");
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println(PREFIX + " Saindo... Até logo!");
+                break;
+            }
+            jsonGitHubUser.User(input);
+        }
 
     }
 }

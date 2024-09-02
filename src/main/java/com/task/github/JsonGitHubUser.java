@@ -23,8 +23,7 @@ public class JsonGitHubUser {
 
     private final Issues insurre = new Issues();
 
-    public void User(Scanner input) throws IOException {
-        String name = input.nextLine();
+    public void User(String name) throws IOException {
         JSONArray events = JsonAPi(name);
         push(events);
         insurre.issueId(events);
@@ -40,9 +39,15 @@ public class JsonGitHubUser {
         httpConnection.setRequestProperty("Accept", "application/json");
         httpConnection.setRequestProperty("Authorization", "Bearer" + dotenv.get("TOKEN_GITHUB"));
 
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()))) {
-            return new JSONArray(in.readLine());
+        BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
+        JSONArray jsonArray = new JSONArray(in.readLine());
+
+        in.close();
+
+        if (jsonArray.isEmpty()){
+            System.out.println("No events found");
         }
+        return jsonArray;
     }
 
 
